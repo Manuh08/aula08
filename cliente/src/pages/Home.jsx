@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
 
+
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 
@@ -37,7 +37,6 @@ export default function Registrar() {
         </form>
         </main>
   );
-=======
 import { useEffect, useState } from "react";
 export default function registrar(){
     const [usuarios, setUsuarios] = useState([]);         
@@ -94,5 +93,5 @@ export default function registrar(){
       </table>
         </>
     )
->>>>>>> 6ca085b7d00140c3104c5a9dc21d84b024eb0fc5
+
 }

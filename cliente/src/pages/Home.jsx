@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -42,7 +42,7 @@ export default function Home() {
       )}
     </table>
   );
-=======
+
 import { useState } from "react";
 
 export default function Registrar() {
@@ -89,5 +89,5 @@ export default function Registrar() {
       </form>
     </main>
     );
->>>>>>> 6ca085b7d00140c3104c5a9dc21d84b024eb0fc5
 }
+  }

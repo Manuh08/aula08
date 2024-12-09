@@ -1,5 +1,8 @@
 
 import { useEffect, useState } from "react";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
+import { Button } from '@mui/material';
 
 export default function Home() {
 
@@ -27,8 +30,27 @@ export default function Home() {
      alert('Ish, nã deu certo!');
     }
   }
+
+  const exportarPDF = () => {
+
+    const doc = new jsPDF();
+    const tabelaDados = usuarios.map((usuario) =>[
+     usuario.nome,
+     usuario.email,
+    ]);
+
+    doc.text("Lista de Usuarios", 10, 10);
+    doc.autoTable({
+      head:[["Nome", "Email"]],
+      body: tabelaDados,
+    });
+
+    doc.save("alunosIFMS.pdf");
+  };
+
   return (
     <table border= '1' >
+      <Button variant="contained" size="large" onClick={exportarPDF}>Exportar PDF</Button>
       <tr>
         <td>Nome</td>
         <td>E-mail</td>
@@ -38,56 +60,9 @@ export default function Home() {
           <td>{usuario.nome}</td>
           <td>{usuario.email}</td>
           <td> <button onClick={() => deletar(usuario.id)} > X</button></td>
+          
         </tr>
       )}
     </table>
   );
-
-import { useState } from "react";
-
-export default function Registrar() {
- const [nome, setNome] = useState (""); 
- const [email, setEmail] = useState ("");
-  const registrar = async (event) => {
-  
-  event.preventDefault();
-    try{
-      await fetch('http://localhost:3000/usuarios', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nome: nome,
-          email: email
-          })
-      })
-    } catch{
-      alert("Ocorreu um erro na aplicação")
-    }};
-  return (
-    <main>
-      <form action="" onSubmit={registrar}>
-
-      <div className="centraliza">
-        <div className="separar">
-        <input
-        placeholder="Nome"
-        type="text"
-        value={nome}
-        onChange={(event) => setNome(event.target.value)}/>
-        </div>
-
-        <div className="separar">
-        <input
-        className="espacamento"
-        placeholder="Email"
-        type='email'
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}/>
-        </div>
-        <button>Salvar</button>
-        </div>
-      </form>
-    </main>
-    );
 }
-  }

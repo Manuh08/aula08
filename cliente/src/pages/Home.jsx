@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { Button } from '@mui/material';
+import { Link } from "react-router-dom";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
 
 export default function Home() {
 
@@ -50,7 +53,7 @@ export default function Home() {
 
   return (
     <table border= '1' >
-      <Button variant="contained" size="large" onClick={exportarPDF}>Exportar PDF</Button>
+      <Button variant="contained" style={{backgroundColor:"salmon"}} size="large" onClick={exportarPDF}>Exportar PDF</Button>
       <tr>
         <td>Nome</td>
         <td>E-mail</td>
@@ -59,10 +62,14 @@ export default function Home() {
         <tr key={usuario.id}>
           <td>{usuario.nome}</td>
           <td>{usuario.email}</td>
-          <td> <button onClick={() => deletar(usuario.id)} > X</button></td>
-          
+          <td> <Button variant="contained" style={{backgroundColor:"salmon"}} onClick={() => deletar(usuario.id)} > <DeleteForeverIcon /> </Button></td>
+          <Link to={'/alterar/'+ usuario.id}>
+          <button>ALterar</button>
+          </Link>
         </tr>
       )}
+      
     </table>
+    
   );
 }

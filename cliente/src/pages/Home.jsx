@@ -62,9 +62,12 @@ export default function Home() {
         <tr key={usuario.id}>
           <td>{usuario.nome}</td>
           <td>{usuario.email}</td>
-          <td> <Button variant="contained" style={{backgroundColor:"salmon"}} onClick={() => deletar(usuario.id)} > <DeleteForeverIcon /> </Button></td>
-          <Link to={'/alterar/'+ usuario.id}>
-          <button>ALterar</button>
+
+          <td>
+             <Button onClick={() => deletar(usuario.id)} > <DeleteForeverIcon /> </Button>
+             </td>
+          <Link to={'/alterar/' + usuario.id}>
+          <button>Alterar</button>
           </Link>
         </tr>
       )}

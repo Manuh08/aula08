@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
@@ -30,7 +29,7 @@ export default function Home() {
       method: 'DELETE'
     });
     }catch{
-     alert('Ish, nã deu certo!');
+     alert('Ish, não deu certo!');
     }
   }
 
@@ -39,16 +38,21 @@ export default function Home() {
     const doc = new jsPDF();
     const tabelaDados = usuarios.map((usuario) =>[
      usuario.nome,
-     usuario.email,
+     usuario.idade,
+     usuario.especie,
+     usuario.raca,
+     usuario.cor,
+     usuario.adotado,
+     usuario.descricao
     ]);
 
     doc.text("Lista de Usuarios", 10, 10);
     doc.autoTable({
-      head:[["Nome", "Email"]],
+      head:[["Nome", "Idade", "Especie", "Raca", "Cor", "Adotado", "Descricao"]],
       body: tabelaDados,
     });
 
-    doc.save("alunosIFMS.pdf");
+    doc.save("Adopt a Friend.pdf");
   };
 
   return (
@@ -56,12 +60,22 @@ export default function Home() {
       <Button variant="contained" style={{backgroundColor:"salmon"}} size="large" onClick={exportarPDF}>Exportar PDF</Button>
       <tr>
         <td>Nome</td>
-        <td>E-mail</td>
+        <td>Idade</td>
+        <td>Especie</td>
+        <td>Raca</td>
+        <td>Cor</td>
+        <td>Adotado</td>
+        <td>Descricao</td>
       </tr>
       {usuarios.map((usuario) =>
         <tr key={usuario.id}>
           <td>{usuario.nome}</td>
-          <td>{usuario.email}</td>
+          <td>{usuario.idade}</td>
+          <td>{usuario.especie}</td>
+          <td>{usuario.raca}</td>
+          <td>{usuario.cor}</td>
+          <td>{usuario.adotado}</td>
+          <td>{usuario.descricao}</td>
 
           <td>
              <Button onClick={() => deletar(usuario.id)} > <DeleteForeverIcon /> </Button>

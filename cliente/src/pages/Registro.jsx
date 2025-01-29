@@ -1,56 +1,83 @@
-
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import styles from '../styles/Form.module.css';
 
-export default function Registrar() { 
-
+export default function Registrar() {
   const [nome, setNome] = useState('');
   const [idade, setIdade] = useState('');
   const [especie, setEspecie] = useState('');
   const [raca, setRaca] = useState('');
   const [cor, setCor] = useState('');
-  const [adotado, setAdotado] = useState("");
-  const [descricao, setDescricao] = useState('');
 
-
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   const registro = async (event) => {
     event.preventDefault();
-    try{
-      const resposta =  await fetch('http://localhost:3000/usuarios', {
-        method : 'POST',
-        headers: { 'Content-Type': 'Application/json' },
+    try {
+      const resposta = await fetch('http://localhost:3000/animais', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          nome: nome,
-          idade: idade,
-          especie: especie,
-          raca: raca,
-          cor: cor,
-          adotado: adotado,
-          descricao: descricao
+          nome,
+          idade,
+          especie,
+          raca,
+          cor
         })
       });
-      if( resposta.ok){
-        navigation('/');
+
+      if (resposta.ok) {
+        navigate('/');
+      } else {
+        alert('Erro no registro!');
       }
-    }catch(err){
+    } catch (err) {
       alert('Erro no registro!', err);
-     }
     }
+  };
 
   return (
-        <main>
-        <form onSubmit={registro}>
-        <input type="text" value={nome} onChange={(event) => setNome(event.target.value)}/>
-        <input type="text" value={idade} onChange={(event) => setIdade(event.target.value)}/>
-        <input type="text" value={especie} onChange={(event) => setEspecie(event.target.value)}/>
-        <input type="text" value={raca} onChange={(event) => setRaca(event.target.value)}/>
-        <input type="text" value={cor} onChange={(event) => setCor(event.target.value)}/>
-        <input type="text" value={adotado} onChange={(event) => setAdotado(event.target.value)}/>
-        <input type="text" value={descricao} onChange={(event) => setDescricao(event.target.value)}/>
-        <button>Salvar</button>
-        </form>
-        </main>
+    <main className={styles.main}>
+      <form onSubmit={registro} className={styles.form}>
+      <img className={styles.image} src="https://cdn-icons-png.flaticon.com/512/12/12638.png"></img>
+        <input
+          placeholder="Nome do PET"
+          type="text"
+          value={nome}
+          onChange={(event) => setNome(event.target.value)}
+          className={styles.input}
+          required
+        />
+        <input
+          placeholder="Idade do PET"
+          type="text"
+          value={idade}
+          onChange={(event) => setIdade(event.target.value)}
+          className={styles.input}
+        />
+        <input
+          placeholder="Espécie do PET"
+          type="text"
+          value={especie}
+          onChange={(event) => setEspecie(event.target.value)}
+          className={styles.input}
+        />
+        <input
+          placeholder="Raça do PET"
+          type="text"
+          value={raca}
+          onChange={(event) => setRaca(event.target.value)}
+          className={styles.input}
+        />
+        <input
+          placeholder="Cor do PET"
+          type="text"
+          value={cor}
+          onChange={(event) => setCor(event.target.value)}
+          className={styles.input}
+        />
+        <button type="submit" className={styles.button}>Salvar</button>
+      </form>
+    </main>
   );
 }

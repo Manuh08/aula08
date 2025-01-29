@@ -1,92 +1,111 @@
 import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
-import { Button } from '@mui/material';
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import styles from "../styles/Table.module.css";
 
 export default function Home() {
-
-  const [usuarios, setUsuarios] = useState([]);
-
+  const [animais, setAnimais] = useState([]);
   useEffect(() => {
-    const buscarUsuario = async () => {
+    const buscarAnimais = async () => {
       try {
-        const resposta = await fetch("http://localhost:3000/usuarios");
+        const resposta = await fetch("http://localhost:3000/animais");
         const dados = await resposta.json();
-        setUsuarios(dados);
+        setAnimais(dados);
       } catch {
-        alert('Ocorreu um erro no app!');
+        alert("Ocorreu um erro ao buscar os dados!");
       }
+    };
+    buscarAnimais();
+  }, []);
+
+  const deletar = async (id) => {
+    try {
+      await fetch("http://localhost:3000/animais/" + id, {
+        method: "DELETE",
+      });
+      setAnimais(animais.filter((animal) => animal.id !== id));
+    } catch {
+      alert("Erro ao deletar o registro!");
     }
-    buscarUsuario();
-  }, [usuarios])
-  
-  const deletar = async(id) => {
-    try{
-    await fetch('http://localhost:3000/usuarios/'+ id,{
-      method: 'DELETE'
-    });
-    }catch{
-     alert('Ish, não deu certo!');
-    }
-  }
+  };
 
   const exportarPDF = () => {
-
     const doc = new jsPDF();
-    const tabelaDados = usuarios.map((usuario) =>[
-     usuario.nome,
-     usuario.idade,
-     usuario.especie,
-     usuario.raca,
-     usuario.cor,
-     usuario.adotado,
-     usuario.descricao
+    const tabelaDados = animais.map((animal) => [
+      animal.nome,
+      animal.idade,
+      animal.especie,
+      animal.raca,
+      animal.cor,
     ]);
 
-    doc.text("Lista de Usuarios", 10, 10);
+    doc.text("Lista de Animais", 10, 10);
     doc.autoTable({
-      head:[["Nome", "Idade", "Especie", "Raca", "Cor", "Adotado", "Descricao"]],
+      head: [["Nome", "Idade", "Espécie", "Raça", "Cor"]],
       body: tabelaDados,
     });
 
-    doc.save("Adopt a Friend.pdf");
+    doc.save("Animais_Registrados.pdf");
   };
 
   return (
-    <table border= '1' >
-      <Button variant="contained" style={{backgroundColor:"salmon"}} size="large" onClick={exportarPDF}>Exportar PDF</Button>
-      <tr>
-        <td>Nome</td>
-        <td>Idade</td>
-        <td>Especie</td>
-        <td>Raca</td>
-        <td>Cor</td>
-        <td>Adotado</td>
-        <td>Descricao</td>
-      </tr>
-      {usuarios.map((usuario) =>
-        <tr key={usuario.id}>
-          <td>{usuario.nome}</td>
-          <td>{usuario.idade}</td>
-          <td>{usuario.especie}</td>
-          <td>{usuario.raca}</td>
-          <td>{usuario.cor}</td>
-          <td>{usuario.adotado}</td>
-          <td>{usuario.descricao}</td>
+    <div>
+      <a href="/registro">
+      <Button
+      variant="contained"
+      style={{ backgroundColor: "salmon" }}
+      size="large"
+      className={styles.button}
+      >Registrar Animal</Button>
+      </a>
+      <br></br><br></br>
+      <Button
+        variant="contained"
+        style={{ backgroundColor: "salmon" }}
+        size="large"
+        onClick={exportarPDF}
+        className={styles.button}
+      >
+        Exportar PDF
+      </Button>
 
-          <td>
-             <Button onClick={() => deletar(usuario.id)} > <DeleteForeverIcon /> </Button>
-             </td>
-          <Link to={'/alterar/' + usuario.id}>
-          <button>Alterar</button>
-          </Link>
-        </tr>
-      )}
-      
-    </table>
-    
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Espécie</th>
+            <th>Raça</th>
+            <th>Cor</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {animais.map((animal) => (
+            <tr key={animal.id}>
+              <td>{animal.nome}</td>
+              <td>{animal.idade}</td>
+              <td>{animal.especie}</td>
+              <td>{animal.raca}</td>
+              <td>{animal.cor}</td>
+              <td>
+                <button
+                  onClick={() => deletar(animal.id)}
+                  className={styles.deleteButton}
+                >
+                  <DeleteForeverIcon />
+                </button>
+                <Link to={`/alterar/${animal.id}`} className={styles.linkButton}>
+                  Alterar
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

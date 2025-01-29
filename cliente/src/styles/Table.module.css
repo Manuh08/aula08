@@ -1,0 +1,97 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem auto;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table th,
+  .table td {
+    border: 1px solid #ddd;
+    padding: 0.8rem;
+    text-align: left;
+    font-size: 1rem;
+  }
+  
+  .table th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .button {
+    background-color: salmon;
+    color: white;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #e57373;
+  }
+  
+  .deleteButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    color: #f44336;
+    transition: color 0.3s ease;
+  }
+  
+  .deleteButton:hover {
+    color: #d32f2f;
+  }
+  
+  .linkButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+  }
+  
+  .linkButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .button {
+    background-color: salmon !important;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .button:hover {
+    background-color: #e57373 !important;
+  }
+
+  .image {
+    width: 80px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+  
